@@ -17,7 +17,7 @@ public class CacheConfig {
     @Bean("resultCache")
     public Cache<String, ResultCacheModel> cacheFactory(){
         return CacheBuilder.newBuilder()
-                .expireAfterWrite(ttl, TimeUnit.MILLISECONDS)
+                .expireAfterWrite(ttl, TimeUnit.MINUTES)
                 .concurrencyLevel(Runtime.getRuntime().availableProcessors())
                 .build();
     }

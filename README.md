@@ -1,19 +1,29 @@
 # tenpo-challenge
 
-#Configuration Properties
-
-Para la carga de configuraciones, y para evitar el uso del @value de spring y de esta manera centralizar las properties se utilizan clases para el mapeo de las properties mediante una configuracion llamada @ConfigurationProperties(prefix = "")
-De esta manera podemos tener las properties mapeadas en un objeto que puede injectarse en cualquier componente y ser utilizado para leer alguna propertie en particular
-para ver como funciona [aca](https://www.baeldung.com/configuration-properties-in-spring-boot) hay una guia de implementacion
-En esta semilla existe una clase SpringConfigurationProperties donde se configuran las properties del spring
-
 ## Estructura
-Para este proyecto se esta usando una interpretacion de la arquitectura Hexagonal, tambien conocida como Ports and Adapters. El enfoque que decidimos tomar es bastante similar a lo que se plantea en [este articulo](https://reflectoring.io/spring-hexagonal/)
+Para este proyecto se esta usando una interpretacion de la arquitectura Hexagonal, tambien conocida como Ports and Adapters. El enfoque que decidi tomar es bastante similar a lo que se plantea en [este articulo](https://reflectoring.io/spring-hexagonal/)
 
 ### Ejemplo
 
 ![ilustracion de arquitectura hexagonal ejemplo](docs/hexagonal-concepto.png)
 
 
+## Stack 🛠️
+
+- java 17
+- postgresql
+- jdbc
+- [spring-boot 3](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)
+- [lombok](https://projectlombok.org/features/)
+- [spock](https://spockframework.org/spock/docs/2.3/index.html) (testing)
+- [guava](https://github.com/google/guava/wiki) (cache)
+- [resilience4j](https://resilience4j.readme.io/docs/ratelimiter) (rate limiter)
+
+## Swagger 📝
+### Swagger json
+http://localhost:8083/api-docs
+
+### Swagger UI
+http://localhost:8083/swagger-ui/index.html
 
 

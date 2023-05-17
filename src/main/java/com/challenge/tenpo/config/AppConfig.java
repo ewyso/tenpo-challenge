@@ -34,7 +34,8 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new RateLimiterInterceptor(3));
+        registry.addInterceptor(new RateLimiterInterceptor(3))
+                .excludePathPatterns("/api-docs", "/swagger-ui/index.html", "/swagger-ui/**" );
     }
 
 }

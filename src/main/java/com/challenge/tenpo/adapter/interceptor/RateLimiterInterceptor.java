@@ -26,6 +26,10 @@ public class RateLimiterInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String requestUri = request.getRequestURI();
+        if (requestUri.contains("/swagger") || requestUri.startsWith("/api-docs")) {
+            return true;
+        }
         if (rateLimiter.acquirePermission(1)) {
             return true;
         } else {

@@ -13,7 +13,7 @@ server:
   port: 8083
 
 cache:
-  ttl: 100000
+  ttl: 30 #ttl in minutes
 
 retry:
   maxAttempts: 2
@@ -28,3 +28,10 @@ service:
   should-be-mocked: false
   uri: "http://totally-a-normal.endpoint/"
 
+
+springdoc:
+  show-actuator: 'false'
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
