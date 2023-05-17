@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: tenpo
+    version: '@project.version@'
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/tenpo-db
+    username: tenpo
+    password: tenpo
+#  liquibase:
+#    enabled: true
+#    change-log: classpath:docker/liquibase.xml
+
+server:
+  port: 8083
+
+cache:
+  ttl: 100000
+
+retry:
+
+rest:
+  client:
+    default:
+      timeout: 30
+
+service:
+  should-be-mocked: true
+  uri: "http://totally-a-normal.endpoint/"

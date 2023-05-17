@@ -1,0 +1,1 @@
+SELECT id, endpoint, http_method, request, response, creation_date from api_calls_historical

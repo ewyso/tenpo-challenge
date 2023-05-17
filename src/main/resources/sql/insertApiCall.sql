@@ -1,0 +1,1 @@
+INSERT INTO api_calls_historical (endpoint, http_method, request, response) values(?,?,?,?)

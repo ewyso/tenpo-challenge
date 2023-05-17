@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  tenpo-db:
+    container_name: tenpo-db
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=tenpo
+      - POSTGRES_PASSWORD=tenpo
+      - POSTGRES_DB=tenpo-db
+    ports:
+      - '5432:5432'
+    volumes: 
+      - tenpo-db:/var/lib/postgresql/data
+      - ./scripts/01-tbl-historic.sql:/docker-entrypoint-initdb.d/1.sql
+volumes:
+  tenpo-db:
+    driver: local
