@@ -7,9 +7,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/tenpo-db
     username: tenpo
     password: tenpo
-#  liquibase:
-#    enabled: true
-#    change-log: classpath:docker/liquibase.xml
+
 
 server:
   port: 8083
@@ -18,6 +16,8 @@ cache:
   ttl: 100000
 
 retry:
+  maxAttempts: 2
+  maxDelay: 100
 
 rest:
   client:
@@ -25,5 +25,5 @@ rest:
       timeout: 30
 
 service:
-  should-be-mocked: true
+  should-be-mocked: false
   uri: "http://totally-a-normal.endpoint/"

@@ -13,9 +13,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tenpo</name>
 	<description>Challenge for Tenpo</description>
+
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<jacoco.version>0.8.8</jacoco.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -74,6 +80,29 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Testing (spock) dependencies -->
+		<dependency>
+			<groupId>org.spockframework</groupId>
+			<artifactId>spock-core</artifactId>
+			<version>2.1-groovy-3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy</artifactId>
+			<version>3.0.16</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>3.0.0-M5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.gmavenplus</groupId>
+			<artifactId>gmavenplus-plugin</artifactId>
+			<version>1.12.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -89,6 +118,75 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<release>11</release>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.13.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compileTests</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<testSources>
+						<testSource>
+							<directory>${project.basedir}/src/main/test/groovy</directory>
+							<includes>
+								<include>**/*.groovy</include>
+							</includes>
+						</testSource>
+					</testSources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M6</version>
+				<configuration>
+					<testSourceDirectory>src/main/test/groovy</testSourceDirectory>
+					<includes>
+						<include>**/*Spec.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<configuration>
+					<excludes>
+						<exclude>**/config/*</exclude>
+						<exclude>**/properties/*</exclude>
+						<exclude>**/exception/*</exclude>
+						<exclude>**/RestTemplateErrorHandler.*</exclude>
+						<exclude>**/TenpoApplication.*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

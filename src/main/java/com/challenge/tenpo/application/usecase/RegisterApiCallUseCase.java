@@ -14,7 +14,6 @@ public class RegisterApiCallUseCase implements RegisterApiCallCommand {
 
     public RegisterApiCallUseCase(ApiCallsRepository apiCallsRepository, JsonMapper jsonMapper) {
         this.apiCallsRepository = apiCallsRepository;
-
         this.jsonMapper = jsonMapper;
     }
 

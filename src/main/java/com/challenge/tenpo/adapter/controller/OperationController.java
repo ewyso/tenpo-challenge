@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("/tenpo/api/v1/")
+@RequestMapping("/tenpo/api/v1")
 public class OperationController {
 
     private final SumarizeValuesCommand sumarizeValuesCommand;
