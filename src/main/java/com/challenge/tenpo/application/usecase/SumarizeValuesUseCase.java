@@ -61,8 +61,7 @@ public class SumarizeValuesUseCase implements SumarizeValuesCommand {
     }
 
     private String buildKey(Values values) {
-        throw new RuntimeException();
-        //        return values.getFirstValue().toString().concat(":").concat(values.getSecondValue().toString());
+        return values.getFirstValue().toString().concat(":").concat(values.getSecondValue().toString());
     }
 
 
