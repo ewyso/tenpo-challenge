@@ -15,7 +15,8 @@ public enum ErrorCode {
     CACHE_SAVE_EXCEPTION(100, "Error al registrar el resultado en el sistema"),
     EXTERNAL_SERVICE_ERROR(127, "Error en el servicio de externo"),
     PERCENTAGE_SERVICE_ERROR(123,"Ha ocurrido un error en el servicio externo de porcentajes"),
-    ENTITY_NOT_FOUND_ERROR(124,"No se encontro una entidad asociada a los parametros de busqueda");
+    ENTITY_NOT_FOUND_ERROR(124,"No se encontro una entidad asociada a los parametros de busqueda"),
+    RATE_LIMIT_EXCEED_ERROR(125,"Se supero el maximo de request por minuto");
 
 
     private final int value;

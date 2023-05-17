@@ -2,12 +2,10 @@ package com.challenge.tenpo.application.usecase
 
 import com.challenge.tenpo.adapter.jdbc.exception.EntityNotFoundJdbcException
 import com.challenge.tenpo.application.port.out.ApiCallsRepository
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import spock.lang.Specification
 
 import static com.challenge.tenpo.config.ErrorCode.ENTITY_NOT_FOUND_ERROR
-
 import static com.challenge.tenpo.testData.ApiCallModelTestData.aValidApiCallModel
 
 class GetApiCallsUseCaseSpec extends Specification {

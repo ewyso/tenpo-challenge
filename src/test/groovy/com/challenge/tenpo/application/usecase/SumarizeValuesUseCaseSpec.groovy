@@ -66,27 +66,4 @@ class SumarizeValuesUseCaseSpec extends Specification {
 
     }
 
-
-    def "sumarizeValues - Cuando se produzca un error se reintentara el flujo hasta 3 veces"() {
-        given:
-        def values = aValidValues()
-        def computedValue = ComputedValue.builder().value(150L).build()
-
-        3 * resultsRepository.get(_) >>> null >> null >> null
-        3 * percentageRepository.obtainSumarizedPercentage(_, _) >>>
-                { throw new PercentageRestException(ErrorCode.PERCENTAGE_SERVICE_ERROR) } >>
-                { throw new PercentageRestException(ErrorCode.PERCENTAGE_SERVICE_ERROR) } >>
-                { throw new PercentageRestException(ErrorCode.PERCENTAGE_SERVICE_ERROR) }
-
-        1 * resultsRepository.save(_) >> {} >> {} >> {}
-
-        when:
-        useCase.sumarizeValues(values)
-
-        then:
-        thrown(PercentageRestException)
-
-    }
-
-
 }

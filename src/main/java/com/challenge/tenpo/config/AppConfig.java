@@ -1,5 +1,6 @@
 package com.challenge.tenpo.config;
 
+import com.challenge.tenpo.adapter.interceptor.RateLimiterInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -9,12 +10,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.Duration;
 
 @Configuration
 
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer {
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public RestTemplate getRestTemplate(
@@ -27,6 +30,11 @@ public class AppConfig {
                 .setReadTimeout(Duration.ofMillis(timeout))
                 .requestFactory(() -> new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()))
                 .build();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new RateLimiterInterceptor(3));
     }
 
 }

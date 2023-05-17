@@ -7,10 +7,10 @@ import com.challenge.tenpo.adapter.rest.exception.BadRequestRestClientException;
 import com.challenge.tenpo.adapter.rest.exception.RestClientGenericException;
 import com.challenge.tenpo.adapter.rest.exception.TimeoutRestClientException;
 import com.challenge.tenpo.application.exception.AdapterException;
+import com.challenge.tenpo.application.exception.RateLimitException;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Builder;
@@ -20,13 +20,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @ControllerAdvice
@@ -95,6 +92,12 @@ public class ErrorHandler {
     public ResponseEntity<ApiErrorResponse> handle(EntityNotFoundJdbcException ex) {
         log.error(HttpStatus.NOT_FOUND.getReasonPhrase(), ex);
         return buildResponseError(HttpStatus.NOT_FOUND, ex, ex.getCode());
+    }
+
+    @ExceptionHandler(RateLimitException.class)
+    public ResponseEntity<ApiErrorResponse> handle(RateLimitException ex) {
+        log.error(HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase(), ex);
+        return buildResponseError(HttpStatus.TOO_MANY_REQUESTS, ex, ex.getCode());
     }
 
     private ResponseEntity<ApiErrorResponse> buildResponseError(HttpStatus httpStatus, Throwable ex, ErrorCode errorCode) {

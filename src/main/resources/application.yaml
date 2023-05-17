@@ -27,3 +27,4 @@ rest:
 service:
   should-be-mocked: false
   uri: "http://totally-a-normal.endpoint/"
+

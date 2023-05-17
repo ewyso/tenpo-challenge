@@ -24,7 +24,7 @@ public class SumarizeValuesUseCase implements SumarizeValuesCommand {
     }
 
     @Override
-    @Retryable(maxAttempts = 3, backoff = @Backoff(delay = 100))
+    @Retryable(maxAttempts = 3, backoff =  @Backoff(delay = 100))
     public NumbersWithPercentage sumarizeValues(Values values) {
         log.info("Computando suma de porcentaje para valores: {}", values );
         val cacheKey = buildKey(values);
@@ -61,7 +61,8 @@ public class SumarizeValuesUseCase implements SumarizeValuesCommand {
     }
 
     private String buildKey(Values values) {
-        return values.getFirstValue().toString().concat(":").concat(values.getSecondValue().toString());
+        throw new RuntimeException();
+        //        return values.getFirstValue().toString().concat(":").concat(values.getSecondValue().toString());
     }
 
 
