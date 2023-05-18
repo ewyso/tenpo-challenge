@@ -39,9 +39,14 @@ Dentro del directorio `postman` vas a poder encontrar una collection con los end
 1. Levanta la db posgre con el docker-compose ubicado en ./docker (`docker-compose up -d`)
 2. Corre el app desde tu IDE favorito o ejecuta el Dockerfile 
 
-### Como buildear y correr Docker
+### Como correr Docker
 1. Asegurate estar parado en el mismo folder del Dockerfile y ejecuta el build del mismo (`docker build -t tenpo-app:1.0.0 .`)
-2. Ejecutalo especificando network para que apunte a tu local (`sudo docker run --network=host tenpo-app:1.0.0`)
+3. Ejecutalo especificando network para que apunte a tu local (`sudo docker run --network=host tenpo-app:1.0.0`)
+4. Disfruta del app :)
+
+### Skippear buildeo
+La imagen se encuentra publicada en [docker hub](https://hub.docker.com/repository/docker/ericwyso/tenpo-app/general), por lo que si te da pereza buildearla podrias saltearlo bajandola directamente
+1. Baja imagen desde docker hub (`docker pull ericwyso/tenpo-app:1.0.0`)
+2. Ejecutalo especificando network para que apunte a tu local (`sudo docker run --network=host ericwyso/tenpo-app:1.0.0`)
 3. Disfruta del app :)
-   
 
