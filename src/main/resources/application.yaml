@@ -16,7 +16,7 @@ cache:
   ttl: 30 #ttl in minutes
 
 retry:
-  maxAttempts: 2
+  maxAttempts: 3
   maxDelay: 100
 
 rest:
