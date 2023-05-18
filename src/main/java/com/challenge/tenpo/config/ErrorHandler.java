@@ -22,24 +22,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
 @Slf4j
 @ControllerAdvice
+@RestControllerAdvice
 public class ErrorHandler {
-    private static final String X_B3_TRACE_ID = "X-B3-TraceId";
-    private static final String X_B3_SPAN_ID = "X-B3-SpanId";
-    private static final String PROD_PROFILE = "prod";
     private final HttpServletRequest httpServletRequest;
-
-    @Value("${spring.profiles.active:}")
-    private String activeProfile;
 
     public ErrorHandler(final HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({BadRequestRestClientException.class})
     public ResponseEntity<ApiErrorResponse> handle(BadRequestRestClientException ex) {
         log.error(HttpStatus.BAD_REQUEST.getReasonPhrase(), ex);
@@ -47,12 +45,14 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(Throwable.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ApiErrorResponse> handle(Throwable ex) {
         log.error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), ex);
         return buildResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex, ErrorCode.INTERNAL_ERROR);
     }
 
     @ExceptionHandler({CacheSaveException.class,})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ApiErrorResponse> handle(CacheSaveException ex) {
         log.error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), ex);
         return buildResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex, ex.getCode());
@@ -64,6 +64,7 @@ public class ErrorHandler {
         return buildResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex, ex.getCode());
     }
 
+    @ResponseStatus(HttpStatus.REQUEST_TIMEOUT)
     @ExceptionHandler(TimeoutRestClientException.class)
     public ResponseEntity<ApiErrorResponse> handle(TimeoutRestClientException ex) {
         log.error(HttpStatus.REQUEST_TIMEOUT.getReasonPhrase(), ex);
@@ -88,12 +89,15 @@ public class ErrorHandler {
         return buildResponseError(HttpStatus.BAD_REQUEST, ex, ErrorCode.BAD_REQUEST);
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundJdbcException.class)
     public ResponseEntity<ApiErrorResponse> handle(EntityNotFoundJdbcException ex) {
         log.error(HttpStatus.NOT_FOUND.getReasonPhrase(), ex);
         return buildResponseError(HttpStatus.NOT_FOUND, ex, ex.getCode());
     }
 
+
+    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
     @ExceptionHandler(RateLimitException.class)
     public ResponseEntity<ApiErrorResponse> handle(RateLimitException ex) {
         log.error(HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase(), ex);
