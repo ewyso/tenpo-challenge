@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   tenpo-db:
@@ -11,9 +11,15 @@ services:
       - POSTGRES_DB=tenpo-db
     ports:
       - '5432:5432'
-    volumes: 
+    networks:
+      - tenponetwork
+    volumes:
       - tenpo-db:/var/lib/postgresql/data
       - ./scripts/01-tbl-historic.sql:/docker-entrypoint-initdb.d/1.sql
+
+networks:
+  tenponetwork:
+
 volumes:
   tenpo-db:
     driver: local

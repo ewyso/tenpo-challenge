@@ -26,4 +26,22 @@ http://localhost:8083/api-docs
 ### Swagger UI
 http://localhost:8083/swagger-ui/index.html
 
+## Collection
+Dentro del directorio `postman` vas a poder encontrar una collection con los endpoints disponibles
+
+
+## Configuración local    
+1. Instalá la Java 17
+2. Cloná el repo (`git@github.com:ewyso/tenpo-challenge.git`)
+3. Abrí el repo con tu IDE favorito
+
+## Como correr el app
+1. Levanta la db posgre con el docker-compose ubicado en ./docker (`docker-compose up -d`)
+2. Corre el app desde tu IDE favorito o ejecuta el Dockerfile 
+
+### Como buildear y correr Docker
+1. Asegurate estar parado en el mismo folder del Dockerfile y ejecuta el build del mismo (`docker build -t tenpo-app:1.0.0 .`)
+2. Ejecutalo especificando network para que apunte a tu local (`sudo docker run --network=host tenpo-app:1.0.0`)
+3. Disfruta del app :)
+   
 
